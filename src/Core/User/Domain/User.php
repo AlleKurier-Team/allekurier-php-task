@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
+ *
  * @ORM\Table(name="users")
  */
 class User
@@ -15,7 +16,9 @@ class User
 
     /**
      * @ORM\Id
+     *
      * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private ?int $id;
@@ -24,6 +27,11 @@ class User
      * @ORM\Column(type="string", length=300, nullable=false)
      */
     private string $email;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false, options={"default" : false})
+     */
+    private bool $is_active = false;
 
     public function __construct(string $email)
     {
@@ -34,5 +42,10 @@ class User
     public function getEmail(): string
     {
         return $this->email;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->is_active;
     }
 }

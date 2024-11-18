@@ -17,7 +17,7 @@ bin/console app:invoice:get-by-status-and-amount new 10000
 
 # Do zrobienia
 
-- [ ] Rozbuduj encję User dodając do niej parametr pozwalający określić aktywność użytkownika (aktywny/nieaktywny). Stwórz migrację, która utworzy nową kolumnę w bazie danych.
+- [x] Rozbuduj encję User dodając do niej parametr pozwalający określić aktywność użytkownika (aktywny/nieaktywny). Stwórz migrację, która utworzy nową kolumnę w bazie danych.
 - [ ] Dodaj możliwość tworzenia nowego użytkownika z poziomu CLI. Argumentem jest e-mail. Nowy użytkownik powinien utworzyć się ze statusem nieaktywny.
 - [ ] Po utworzeniu użytkownika powinien zostać wysłany e-mail do tego użytkownika z komunikatem "Zarejestrowano konto w systemie. Aktywacja konta trwa do 24h" - chodzi o wykorzystanie interfejsu \App\Common\Mailer\MailerInterface - nie trzeba tworzyć rzeczywistej wysyłki maila.
 - [ ] Wprowadź do systemu założenie biznesowe pozwalające tworzyć faktury tylko dla aktywnych użytkowników i napisz testy udowadniające, że tak jest.
