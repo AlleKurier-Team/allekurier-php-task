@@ -5,6 +5,7 @@ namespace App\Core\Invoice\Infrastructure\Persistance;
 use App\Core\Invoice\Domain\Invoice;
 use App\Core\Invoice\Domain\Repository\InvoiceRepositoryInterface;
 use App\Core\Invoice\Domain\Status\InvoiceStatus;
+use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
@@ -22,7 +23,9 @@ class DoctrineInvoiceRepository implements InvoiceRepositoryInterface
             ->select('i')
             ->from(Invoice::class, 'i')
             ->where('i.status = :invoice_status')
-            ->setParameter(':invoice_status', InvoiceStatus::NEW)
+            ->andWhere('i.amount > :amount')
+            ->setParameter(':invoice_status', $invoiceStatus, ParameterType::STRING)
+            ->setParameter(':amount', $amount)
             ->getQuery()
             ->getResult();
     }
