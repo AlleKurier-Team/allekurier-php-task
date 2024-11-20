@@ -12,6 +12,11 @@ interface UserRepositoryInterface
      */
     public function getByEmail(string $email): User;
 
+    /**
+     * @return User[]
+     */
+    public function getInactive(): array;
+
     public function save(User $user): void;
 
     public function flush(): void;
