@@ -40,7 +40,8 @@ class CreateInvoiceHandlerTest extends TestCase
         $user = $this->createMock(User::class);
 
         $invoice = new Invoice(
-            $user, 12500
+            $user,
+            12500
         );
 
         $this->userRepository->expects(self::once())

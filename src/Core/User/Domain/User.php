@@ -18,7 +18,7 @@ class User
     /**
      * @ORM\Id
      *
-     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
+     * @ORM\Column(type="integer", options={"unsigned": true}, nullable=false)
      *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -30,7 +30,7 @@ class User
     private string $email;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false, options={"default" : false})
+     * @ORM\Column(type="boolean", nullable=false, options={"default": false})
      */
     private bool $is_active = false;
 
