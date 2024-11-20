@@ -51,6 +51,10 @@ class Invoice
             throw new InvoiceException('Kwota faktury musi być większa od 0');
         }
 
+        if (!$user->isActive()) {
+            throw new InvoiceException('Cannot create invoice for inactive user');
+        }
+
         $this->id = null;
         $this->user = $user;
         $this->amount = $amount;
