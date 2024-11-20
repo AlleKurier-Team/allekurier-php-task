@@ -3,12 +3,15 @@
 namespace App\Core\User\Domain;
 
 use App\Common\EventManager\EventsCollectorTrait;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="users")
+ * @UniqueEntity(fields={"email"}, message="This Email is in use already")
  */
 class User
 {
@@ -22,7 +25,9 @@ class User
     private ?int $id;
 
     /**
-     * @ORM\Column(type="string", length=300, nullable=false)
+     * @ORM\Column(name="email", type="string", length=300, nullable=false, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email(message="The email {{ value }} is not a valid email.", normalizer="trim")
      */
     private string $email;
 
@@ -35,6 +40,7 @@ class User
     {
         $this->id = null;
         $this->email = $email;
+        $this->isActive = false;
     }
 
     public function getEmail(): string
@@ -48,8 +54,8 @@ class User
         return $this->isActive;
     }
 
-    public function setIsActive(bool $isActive): void
+    public function getId(): int
     {
-        $this->isActive = $isActive;
+        return $this->id;
     }
 }
