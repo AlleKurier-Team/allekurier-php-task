@@ -25,7 +25,7 @@ class User
     private ?int $id;
 
     /**
-     * @ORM\Column(type="string", length=300, nullable=false)
+     * @ORM\Column(type="string", length=300, nullable=false, unique=true)
      */
     private string $email;
 
