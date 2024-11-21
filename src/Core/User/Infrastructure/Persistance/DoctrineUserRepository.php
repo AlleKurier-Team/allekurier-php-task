@@ -43,7 +43,6 @@ class DoctrineUserRepository implements UserRepositoryInterface
             ->from(User::class, 'u')
             ->where('u.isActive = :is_active')
             ->setParameter('is_active', $isActive)
-            ->setMaxResults(100)
             ->getQuery()
             ->getResult();
     }
