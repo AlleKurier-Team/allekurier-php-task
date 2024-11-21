@@ -2,6 +2,7 @@
 
 namespace App\Core\User\Infrastructure\Persistance;
 
+use App\Core\User\Domain\Exception\ActiveUserNotFoundException;
 use App\Core\User\Domain\Exception\UserNotFoundException;
 use App\Core\User\Domain\Repository\UserRepositoryInterface;
 use App\Core\User\Domain\User;
@@ -10,16 +11,15 @@ use Doctrine\ORM\NonUniqueResultException;
 
 class DoctrineUserRepository implements UserRepositoryInterface
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager)
-    {
-    }
+    public function __construct(private readonly EntityManagerInterface $entityManager) {}
 
     /**
      * @throws NonUniqueResultException
      */
     public function getByEmail(string $email): User
     {
-        $user = $this->entityManager->createQueryBuilder()
+        $user = $this->entityManager
+            ->createQueryBuilder()
             ->select('u')
             ->from(User::class, 'u')
             ->where('u.email = :user_email')
@@ -56,5 +56,18 @@ class DoctrineUserRepository implements UserRepositoryInterface
     public function flush(): void
     {
         $this->entityManager->flush();
+    }
+
+    public function getActiveByEmail(string $email): User
+    {
+        $user = $this->entityManager
+                ->getRepository(User::class)
+                ->findOneBy(['email' => $email, 'isActive' => true]);
+
+        if (null === $user) {
+            throw new ActiveUserNotFoundException('Aktywny użytkownik nie istnieje');
+        }
+
+        return $user;
     }
 }

@@ -12,6 +12,8 @@ interface UserRepositoryInterface
      */
     public function getByEmail(string $email): User;
 
+    public function getActiveByEmail(string $email): User;
+
     /**
      * @param bool $isActive
      * @return User[]
