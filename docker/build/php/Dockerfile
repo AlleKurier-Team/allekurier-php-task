@@ -20,13 +20,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libfreetype6-dev \
         libc-client-dev \
         libkrb5-dev \
-#        locales \
-    && docker-php-ext-configure gd \
-            --with-freetype \
-            --with-jpeg \
-    && docker-php-ext-configure intl \
-    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl\
-    && docker-php-ext-install \
+        bash-completion \
+        #        locales \
+        && docker-php-ext-configure gd \
+        --with-freetype \
+        --with-jpeg \
+        && docker-php-ext-configure intl \
+        && docker-php-ext-configure imap --with-kerberos --with-imap-ssl\
+        && docker-php-ext-install \
         pdo_mysql soap opcache calendar zip intl pcntl pdo_pgsql xsl gd bcmath imap
 
 
@@ -57,3 +58,7 @@ WORKDIR /var/www/html
 # wait-for-it czeka na wystartowanie mysql aby zrobic migracje
 # apache2-foreground odpala apache
 CMD composer install ; wait-for-it mysql:3306 -t 120 -- bin/console doctrine:migrations:migrate -n ; apache2-foreground
+
+# Enable Symfony Console Autocomplete
+RUN ./bin/console completion bash > /etc/bash_completion.d/symfony-console
+RUN echo "source /etc/bash_completion" >> ~/.bashrc
